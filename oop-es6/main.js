@@ -243,7 +243,15 @@ class StudentLog {
     return this.grades.length;
   }
   getAverageBySubject(subject) {
-    
+    let sum = 0;
+    for (let i=0; this.grades.length-1; i++) {
+    console.log(i,this.grades[i]);
+      if(this.grades[i].subject == subject) {
+        sum += this.grades[i].grade;
+      }
+    }
+    return this.grades.length; // / this.length;
+    //((this.length != 0)?this.length:1);
   }
 }
 const Ivanoff = new StudentLog('Иванов');
@@ -261,4 +269,7 @@ console.log(Ivanoff.addGrade(5,'marxism-leninism'));
 console.log(Ivanoff.addGrade(5,'marxism-leninism'));
 console.log(Ivanoff.addGrade('very good','marxism-leninism'));
 console.log(Ivanoff.addGrade(255,'marxism-leninism'));
-console.log(Ivanoff);
+console.log('average grades:');
+console.log(Ivanoff.getAverageBySubject('algebra'));
+console.log(Ivanoff.getAverageBySubject('geometry'));
+console.log(Ivanoff.getAverageBySubject('marxism-leninism'));
