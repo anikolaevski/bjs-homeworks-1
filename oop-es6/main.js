@@ -244,21 +244,38 @@ class StudentLog {
   }
   getAverageBySubject(subject) {
     let sum = 0;
-    for (let i=0; this.grades.length-1; i++) {
-    console.log(i,this.grades[i]);
-      if(this.grades[i].subject == subject) {
-        sum += this.grades[i].grade;
+    let cnt = 0;
+    for (let i=0; i <= this.grades.length-1; i++) {
+      if(this.grades[i].subject === subject) {
+        sum +=this.grades[i].grade;
+        cnt++;
       }
     }
-    return this.grades.length; // / this.length;
-    //((this.length != 0)?this.length:1);
+    if(cnt == 0) {
+      console.log(`Ученик ${this.name} не имеет оценок по предмету '${subject}'`);
+    }
+    return sum / ((cnt > 0)?cnt:1);
+  }
+  getTotalAverage() {
+    let sum = 0;
+    let cnt = 0;
+    for (let i=0; i <= this.grades.length-1; i++) {
+      sum +=this.grades[i].grade;
+      cnt++;
+    }
+    if(cnt == 0) {
+      console.log(`Ученик ${this.name} не имеет оценок`);
+    }
+    return sum / ((cnt > 0)?cnt:1);
   }
 }
+
 const Ivanoff = new StudentLog('Иванов');
 console.log('');
 console.log('Task#3');
 console.log('------');
 console.log(Ivanoff);
+console.log('total',Ivanoff.getTotalAverage());
 console.log(Ivanoff.addGrade(3,'algebra'));
 console.log(Ivanoff.addGrade(4,'algebra'));
 console.log(Ivanoff.addGrade(5,'algebra'));
@@ -270,6 +287,8 @@ console.log(Ivanoff.addGrade(5,'marxism-leninism'));
 console.log(Ivanoff.addGrade('very good','marxism-leninism'));
 console.log(Ivanoff.addGrade(255,'marxism-leninism'));
 console.log('average grades:');
-console.log(Ivanoff.getAverageBySubject('algebra'));
-console.log(Ivanoff.getAverageBySubject('geometry'));
-console.log(Ivanoff.getAverageBySubject('marxism-leninism'));
+console.log('algebra',Ivanoff.getAverageBySubject('algebra'));
+console.log('geometry',Ivanoff.getAverageBySubject('geometry'));
+console.log('marxism-leninism',Ivanoff.getAverageBySubject('marxism-leninism'));
+console.log('total',Ivanoff.getTotalAverage());
+console.log('not_existing_subject',Ivanoff.getAverageBySubject('not_existing_subject'));
