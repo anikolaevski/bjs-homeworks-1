@@ -12,10 +12,10 @@ function compareArrays( arr1, arr2 ) {
 }
 console.log('compareArrays');
 console.log('-------------');
-console.log(compareArrays([8, 9], [6])); // false, разные значения
-console.log(compareArrays([8, 9, 5, 4], [8, 9, 5, 4, 8, 3, 5])); // false, разные значения
-console.log(compareArrays([9, 2, 4, 8, 2], [9, 2, 4])); // false, разные значения
-console.log(compareArrays([1, 2, 3], [2, 3, 1])); // false, разные индексы, хотя и одинаковые значения
+console.log(compareArrays([8, 9], [6])); // false, СЂР°Р·РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ
+console.log(compareArrays([8, 9, 5, 4], [8, 9, 5, 4, 8, 3, 5])); // false, СЂР°Р·РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ
+console.log(compareArrays([9, 2, 4, 8, 2], [9, 2, 4])); // false, СЂР°Р·РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ
+console.log(compareArrays([1, 2, 3], [2, 3, 1])); // false, СЂР°Р·РЅС‹Рµ РёРЅРґРµРєСЃС‹, С…РѕС‚СЏ Рё РѕРґРёРЅР°РєРѕРІС‹Рµ Р·РЅР°С‡РµРЅРёСЏ
 console.log(compareArrays([8, 1, 2], [8, 1, 2])); // true
 console.log(compareArrays([8, 1, 2, 5, 6, 1], [8, 1, 2, 5, 6, 1])); // true
 
