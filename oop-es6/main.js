@@ -9,9 +9,7 @@ class Weapon {
      this.range = data.range;
    }
   takeDamage(damage) {
-    if (this.durability == Infinity) {
-      null;
-    } else if(this.durability >= damage) {
+    if(this.durability >= damage) {
       this.durability -= damage;
     } else {
       this.durability = 0;
@@ -21,7 +19,7 @@ class Weapon {
     if (this.durability == 0) {
       return 0;
     } else if(this.durability == Infinity) {
-      return Infinity;
+      return this.attack;
     } else if(this.durability >= this.full_durability  * 0.3) {
       return this.attack;
     }  else if(this.durability > 0) {
@@ -98,7 +96,7 @@ const storm_staff1 = new Weapon({
 });
 
 //Task#2
-class hand extends Weapon {
+class Hand extends Weapon {
   constructor() {
     super({
       name: 'Рука',
@@ -108,7 +106,7 @@ class hand extends Weapon {
     });
   }
 };
-const hand2 = new hand();
+const hand2 = new Hand();
 
 class Bow extends Weapon {
   constructor() {
@@ -122,7 +120,7 @@ class Bow extends Weapon {
 };
 const bow2 = new Bow();
 
-class sword extends Weapon {
+class Sword extends Weapon {
   constructor() {
     super({
       name: 'Меч',
@@ -132,9 +130,9 @@ class sword extends Weapon {
     });
   }
 };
-const sword2 = new sword();
+const sword2 = new Sword();
 
-class knife extends Weapon {
+class Knife extends Weapon {
   constructor() {
     super({
       name: 'Нож',
@@ -144,9 +142,9 @@ class knife extends Weapon {
     });
   }
 };
-const knife2 = new knife();
+const knife2 = new Knife();
 
-class staff extends Weapon {
+class Staff extends Weapon {
   constructor() {
     super({
       name: 'Посох',
@@ -156,7 +154,7 @@ class staff extends Weapon {
     });
   }
 };
-const staff2 = new staff();
+const staff2 = new Staff();
 
 console.log('name','attack','durability','range'); 
 console.log('----','------','----------','-----'); 
@@ -166,48 +164,48 @@ console.log(sword2.name, sword2.attack, sword2.durability, sword2.range);
 console.log(knife2.name, knife2.attack, knife2.durability, knife2.range); 
 console.log(staff2.name, staff2.attack, staff2.durability, staff2.range); 
 
-class long_bow extends Bow {
+class Long_Bow extends Bow {
   constructor(data) {
-    super(data);
+    super();
     this.name = data.name;
     this.version_of = data.version_of;
     this.attack = data.attack;
     this.range = data.range;
   }
 };
-const long_bow2 = new long_bow({
+const long_bow2 = new Long_Bow({
   name: 'Длинный лук',
   version_of: 'Лук',
   attack: 15,
   range: 3,
 });
 
-class ax extends sword {
+class Ax extends Sword {
   constructor(data) {
-    super(data);
+    super();
     this.name = data.name;
     this.version_of = data.version_of;
     this.attack = data.attack;
     this.durability = data.durability;
   }
 };
-const ax2 = new ax({
+const ax2 = new Ax({
   name: 'Секира',
   version_of: 'Меч',
   attack: 27,
   durability: 800
 });
 
-class storm_staff extends staff {
+class Storm_Staff extends Staff {
   constructor(data) {
-    super(data);
+    super();
     this.name = data.name;
     this.version_of = data.version_of;
     this.attack = data.attack;
     this.range = data.range;
   }
 };
-const storm_staff2 = new storm_staff({
+const storm_staff2 = new Storm_Staff({
   name: 'Посох Бури',
   version_of: 'Посох',
   attack: 10,
@@ -292,3 +290,94 @@ console.log('geometry',Ivanoff.getAverageBySubject('geometry'));
 console.log('marxism-leninism',Ivanoff.getAverageBySubject('marxism-leninism'));
 console.log('total',Ivanoff.getTotalAverage());
 console.log('not_existing_subject',Ivanoff.getAverageBySubject('not_existing_subject'));
+
+class StudentLogV2 {
+
+  constructor(name) {
+    this.name = name;
+    this.grades = [];
+  }
+
+  getName() {
+    return this.name;
+  }
+
+  addGrade(grade, subject) {
+    let addState = 1;
+    if(typeof(grade) != 'number') {
+      console.log(`Вы пытались поставить оценку '${grade}' по предмету '${subject}'. Оценка должна быть числом.`);
+      addState = 0;
+    }
+    if(grade <= 0 || grade >5) {
+      console.log(`Вы пытались поставить оценку'${grade}' по предмету '${subject}'. Оценка может принимать значения от 1 до 5`);
+      addState = 0;
+    }
+    let subj = this.grades.find(xmpl => xmpl.subject == subject);
+    if(subj) {
+       if (addState == 1) {
+         subj.values.push(grade);
+       }
+       return subj.values.length;
+    } else {
+      subj = { 
+        subject: subject,
+        values: [grade]
+      };
+      if (addState == 1) {
+        this.grades.push(subj);
+      }
+      return this.grades.length;
+    }
+  }
+
+  getAverageBySubject(subject) {
+    let sum = 0;
+    let nbr = 1;
+    const subj = this.grades.find(xmpl => xmpl.subject == subject);
+    if(subj) {
+      nbr = subj.values.length;
+      for(let i = 0; i <= nbr - 1; i++ ) {
+        sum += subj.values[i];
+      }
+    } else {
+      console.log(`Предмет ${subject} не найден`);
+    }
+    return sum / nbr;
+  }
+  
+  getTotalAverage() {
+    let totalSum = 0;
+    let totalNbr = 0;
+    this.grades.forEach(subj => { 
+      //totalSum += this.getAverageBySubject(subj.subject); 
+      //totalNbr++;
+      for(let i = 0; i <= subj.values.length - 1; i++ ) {
+        totalSum += subj.values[i];
+        totalNbr++;
+      }
+    });
+    if (totalNbr > 0) {
+      return totalSum / totalNbr;
+     } else {
+      return 0;
+     }
+    
+  }
+}
+const Petroff = new StudentLogV2('Petroff');
+console.log(Petroff);
+console.log(Petroff.addGrade(3,'algebra'));
+console.log(Petroff.addGrade(4,'algebra'));
+console.log(Petroff.addGrade(5,'algebra'));
+console.log(Petroff.addGrade(4,'geometry'));
+console.log(Petroff.addGrade(5,'geometry'));
+console.log(Petroff.addGrade(5,'geometry'));
+console.log(Petroff.addGrade(5,'marxism-leninism'));
+console.log(Petroff.addGrade(5,'marxism-leninism'));
+console.log(Petroff.addGrade('very good','marxism-leninism'));
+console.log(Petroff.addGrade(255,'marxism-leninism'));
+console.log('algebra',Petroff.getAverageBySubject('algebra'));
+console.log('geometry',Petroff.getAverageBySubject('geometry'));
+console.log('marxism-leninism',Petroff.getAverageBySubject('marxism-leninism'));
+console.log('asdfg',Petroff.getAverageBySubject('asdfg'));
+console.log(Petroff.getTotalAverage());
