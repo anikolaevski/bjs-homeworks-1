@@ -14,11 +14,13 @@ function setAlarm (time, message, callback) {
  return now_hours+':'+now_mins;
 }
  
-//тест
-
-setAlarm('23:29', 'Пора сдавать работу!', (message) => {alert(message)});
 
 function setDailyRhythm(wakeUpTime, bedTime) {
   setInterval(setAlarm(wakeUpTime, 'Пора просыпаться!', (message) => {alert(message)}), 60000); 
   setInterval(setAlarm(bedTime, 'Пора в кровать!', (message) => {alert(message)}), 60000);
 }
+
+//тест
+
+setAlarm('23:33', 'Пора сдавать работу!', (message) => {alert(message)});
+setDailyRhythm();
