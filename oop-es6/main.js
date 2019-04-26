@@ -220,76 +220,6 @@ console.log(ax2.name, ax2.version_of, ax2.attack, ax2.range, ax2.durability);
 console.log(storm_staff2.name, storm_staff2.version_of, storm_staff2.attack, storm_staff2.range, storm_staff2.durability); 
 
 //Task#3
-class StudentLog {
-  constructor(name) {
-    this.name = name;
-    this.grades = [];
-  }
-  getName() {
-    return this.name;
-  }
-  addGrade(grade, subject) {
-    if(typeof(grade) != 'number') {
-      console.log(`Вы пытались поставить оценку '${grade}' по предмету '${subject}'. Оценка должна быть числом.`);
-      return this.grades.length;
-    }
-    if(grade <= 0 || grade >5) {
-      console.log(`Вы пытались поставить оценку'${grade}' по предмету '${subject}'. Оценка может принимать значения от 1 до 5`);
-      return this.grades.length;
-    }
-    this.grades.push({grade: grade, subject: subject});
-    return this.grades.length;
-  }
-  getAverageBySubject(subject) {
-    let sum = 0;
-    let cnt = 0;
-    for (let i=0; i <= this.grades.length-1; i++) {
-      if(this.grades[i].subject === subject) {
-        sum +=this.grades[i].grade;
-        cnt++;
-      }
-    }
-    if(cnt == 0) {
-      console.log(`Ученик ${this.name} не имеет оценок по предмету '${subject}'`);
-    }
-    return sum / ((cnt > 0)?cnt:1);
-  }
-  getTotalAverage() {
-    let sum = 0;
-    let cnt = 0;
-    for (let i=0; i <= this.grades.length-1; i++) {
-      sum +=this.grades[i].grade;
-      cnt++;
-    }
-    if(cnt == 0) {
-      console.log(`Ученик ${this.name} не имеет оценок`);
-    }
-    return sum / ((cnt > 0)?cnt:1);
-  }
-}
-
-const Ivanoff = new StudentLog('Иванов');
-console.log('');
-console.log('Task#3');
-console.log('------');
-console.log(Ivanoff);
-console.log('total',Ivanoff.getTotalAverage());
-console.log(Ivanoff.addGrade(3,'algebra'));
-console.log(Ivanoff.addGrade(4,'algebra'));
-console.log(Ivanoff.addGrade(5,'algebra'));
-console.log(Ivanoff.addGrade(4,'geometry'));
-console.log(Ivanoff.addGrade(5,'geometry'));
-console.log(Ivanoff.addGrade(5,'geometry'));
-console.log(Ivanoff.addGrade(5,'marxism-leninism'));
-console.log(Ivanoff.addGrade(5,'marxism-leninism'));
-console.log(Ivanoff.addGrade('very good','marxism-leninism'));
-console.log(Ivanoff.addGrade(255,'marxism-leninism'));
-console.log('average grades:');
-console.log('algebra',Ivanoff.getAverageBySubject('algebra'));
-console.log('geometry',Ivanoff.getAverageBySubject('geometry'));
-console.log('marxism-leninism',Ivanoff.getAverageBySubject('marxism-leninism'));
-console.log('total',Ivanoff.getTotalAverage());
-console.log('not_existing_subject',Ivanoff.getAverageBySubject('not_existing_subject'));
 
 class StudentLogV2 {
 
@@ -333,7 +263,7 @@ class StudentLogV2 {
   getAverageBySubject(subject) {
     let sum = 0;
     let nbr = 1;
-    const subj = this.grades.find(xmpl => xmpl.subject == subject);
+    const subj = this.grades.find(x => x.subject == subject);
     if(subj) {
       nbr = subj.values.length;
       for(let i = 0; i <= nbr - 1; i++ ) {
@@ -347,23 +277,19 @@ class StudentLogV2 {
   
   getTotalAverage() {
     let totalSum = 0;
-    let totalNbr = 0;
+    let totalNumber = 0;
     this.grades.forEach(subj => { 
-      //totalSum += this.getAverageBySubject(subj.subject); 
-      //totalNbr++;
-      for(let i = 0; i <= subj.values.length - 1; i++ ) {
-        totalSum += subj.values[i];
-        totalNbr++;
-      }
+      totalSum += this.getAverageBySubject(subj.subject); 
+      totalNumber++;
     });
-    if (totalNbr > 0) {
-      return totalSum / totalNbr;
+    if (totalNumber > 0) {
+      return totalSum / totalNumber;
      } else {
       return 0;
      }
-    
   }
 }
+
 const Petroff = new StudentLogV2('Petroff');
 console.log(Petroff);
 console.log(Petroff.addGrade(3,'algebra'));
@@ -379,5 +305,5 @@ console.log(Petroff.addGrade(255,'marxism-leninism'));
 console.log('algebra',Petroff.getAverageBySubject('algebra'));
 console.log('geometry',Petroff.getAverageBySubject('geometry'));
 console.log('marxism-leninism',Petroff.getAverageBySubject('marxism-leninism'));
-console.log('asdfg',Petroff.getAverageBySubject('asdfg'));
-console.log(Petroff.getTotalAverage());
+console.log('Java Script Basic',Petroff.getAverageBySubject('Java Script Basic'));
+console.log(`Total average: ${Petroff.getTotalAverage()}`);
