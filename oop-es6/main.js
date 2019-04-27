@@ -156,13 +156,13 @@ class Staff extends Weapon {
 };
 const staff2 = new Staff();
 
-console.log('name','attack','durability','range'); 
-console.log('----','------','----------','-----'); 
-console.log(hand2.name, hand2.attack, hand2.durability, hand2.range); 
-console.log(bow2.name, bow2.attack, bow2.durability, bow2.range); 
-console.log(sword2.name, sword2.attack, sword2.durability, sword2.range); 
-console.log(knife2.name, knife2.attack, knife2.durability, knife2.range); 
-console.log(staff2.name, staff2.attack, staff2.durability, staff2.range); 
+console.log('name','attack','durability','range');
+console.log('----','------','----------','-----');
+console.log(hand2.name, hand2.attack, hand2.durability, hand2.range);
+console.log(bow2.name, bow2.attack, bow2.durability, bow2.range);
+console.log(sword2.name, sword2.attack, sword2.durability, sword2.range);
+console.log(knife2.name, knife2.attack, knife2.durability, knife2.range);
+console.log(staff2.name, staff2.attack, staff2.durability, staff2.range);
 
 class Long_Bow extends Bow {
   constructor(data) {
@@ -213,97 +213,100 @@ const storm_staff2 = new Storm_Staff({
 });
 
 console.log('');
-console.log('name', 'version of', 'attack','range','durability'); 
-console.log('----', '----------', '------','-----','----------'); 
-console.log(long_bow2.name, long_bow2.version_of, long_bow2.attack, long_bow2.range, long_bow2.durability); 
-console.log(ax2.name, ax2.version_of, ax2.attack, ax2.range, ax2.durability); 
-console.log(storm_staff2.name, storm_staff2.version_of, storm_staff2.attack, storm_staff2.range, storm_staff2.durability); 
+console.log('name', 'version of', 'attack','range','durability');
+console.log('----', '----------', '------','-----','----------');
+console.log(long_bow2.name, long_bow2.version_of, long_bow2.attack, long_bow2.range, long_bow2.durability);
+console.log(ax2.name, ax2.version_of, ax2.attack, ax2.range, ax2.durability);
+console.log(storm_staff2.name, storm_staff2.version_of, storm_staff2.attack, storm_staff2.range, storm_staff2.durability);
 
 //Task#3
 
-class StudentLogV2 {
+class StudentLog {
 
   constructor(name) {
-    this.name = name;
-    this.grades = [];
+    this._name_ = name;
   }
 
   getName() {
-    return this.name;
+    return this._name_;
+  }
+
+  checkSubject(subject) {
+    if(subject == '_name_') {
+      console.log(`Неверное название предмета: ${subject}`)
+      return '';
+    }
+    return subject;
   }
 
   addGrade(grade, subject) {
     let addState = 1;
     if(typeof(grade) != 'number') {
       console.log(`Вы пытались поставить оценку '${grade}' по предмету '${subject}'. Оценка должна быть числом.`);
-      addState = 0;
+      return 0;
     }
     if(grade <= 0 || grade >5) {
       console.log(`Вы пытались поставить оценку'${grade}' по предмету '${subject}'. Оценка может принимать значения от 1 до 5`);
-      addState = 0;
+      return 0;
     }
-    let subj = this.grades.find(xmpl => xmpl.subject == subject);
-    if(subj) {
-       if (addState == 1) {
-         subj.values.push(grade);
-       }
-       return subj.values.length;
-    } else {
-      subj = { 
-        subject: subject,
-        values: [grade]
-      };
-      if (addState == 1) {
-        this.grades.push(subj);
-      }
-      return this.grades.length;
+    if (!this.checkSubject(subject)) {
+      return 0;
     }
+    if(!this[subject]) {
+      this[subject] = [];
+    }
+    this[subject].push(grade);
+    return this[subject].length;
   }
 
   getAverageBySubject(subject) {
     let sum = 0;
-    let nbr = 1;
-    const subj = this.grades.find(x => x.subject == subject);
-    if(subj) {
-      nbr = subj.values.length;
-      for(let i = 0; i <= nbr - 1; i++ ) {
-        sum += subj.values[i];
+    let numOfGrades = 1;
+    if(this[subject]) {
+      numOfGrades = this[subject].length;
+      for(let i = 0; i <= numOfGrades - 1; i++ ) {
+        sum += this[subject][i];
       }
     } else {
       console.log(`Предмет ${subject} не найден`);
     }
-    return sum / nbr;
+    return sum / numOfGrades;
   }
-  
+
   getTotalAverage() {
     let totalSum = 0;
-    let totalNumber = 0;
-    this.grades.forEach(subj => { 
-      totalSum += this.getAverageBySubject(subj.subject); 
-      totalNumber++;
-    });
-    if (totalNumber > 0) {
-      return totalSum / totalNumber;
-     } else {
-      return 0;
-     }
+    let numOfSubjects = 0;
+    for (var subject in this) {
+      if (subject != '_name_') {
+        totalSum += this.getAverageBySubject(subject);
+        numOfSubjects++;
+      }
+    }
+    return totalSum / ((numOfSubjects > 0)?numOfSubjects:1);
   }
 }
 
-const Petroff = new StudentLogV2('Petroff');
-console.log(Petroff);
-console.log(Petroff.addGrade(3,'algebra'));
-console.log(Petroff.addGrade(4,'algebra'));
-console.log(Petroff.addGrade(5,'algebra'));
-console.log(Petroff.addGrade(4,'geometry'));
-console.log(Petroff.addGrade(5,'geometry'));
-console.log(Petroff.addGrade(5,'geometry'));
-console.log(Petroff.addGrade(5,'marxism-leninism'));
-console.log(Petroff.addGrade(5,'marxism-leninism'));
-console.log(Petroff.addGrade('very good','marxism-leninism'));
-console.log(Petroff.addGrade(255,'marxism-leninism'));
+const Petroff = new StudentLog('Petroff');
+Petroff.addGrade(3,'algebra');
+Petroff.addGrade(4,'algebra');
+Petroff.addGrade(5,'algebra');
+Petroff.addGrade(4,'geometry');
+Petroff.addGrade(5,'geometry');
+Petroff.addGrade(5,'geometry');
+Petroff.addGrade(5,'marxism-leninism');
+Petroff.addGrade(5,'marxism-leninism');
+Petroff.addGrade('very good','marxism-leninism');
+Petroff.addGrade(255,'marxism-leninism');
+Petroff.addGrade(5,'Java Script Basic');
+Petroff.addGrade(4,'Java Script Basic');
+Petroff.addGrade(4,'Teachings Carlos Castaneda');
+Petroff.addGrade(4,'Teachings Carlos Castaneda');
+Petroff.addGrade(2,'_name_');
 console.log('algebra',Petroff.getAverageBySubject('algebra'));
 console.log('geometry',Petroff.getAverageBySubject('geometry'));
 console.log('marxism-leninism',Petroff.getAverageBySubject('marxism-leninism'));
 console.log('Java Script Basic',Petroff.getAverageBySubject('Java Script Basic'));
+console.log('Teachings Carlos Castaneda',Petroff.getAverageBySubject('Teachings Carlos Castaneda'));
+console.log('Unknown',Petroff.getAverageBySubject('Unknown'));
 console.log(`Total average: ${Petroff.getTotalAverage()}`);
+console.log(Petroff);
