@@ -1,26 +1,21 @@
-function setAlarm (time, message, callback) {
-    const ct = get_hhmm_time();
-    if(ct == time) {
-      callback(message);
-    }
- }
-
- function get_hhmm_time() {
-  const now = new Date();
-  let now_hours = now.getHours()+'';
-  let now_mins = now.getMinutes()+'';
-  while (now_hours.length < 2) { now_hours  = "0" + now_hours;}
-  while (now_mins.length < 2) { now_mins  = "0" + now_mins;}
- return now_hours+':'+now_mins;
+function setAlarm (time, callback) {
+  const ct = get_hhmm_time();
+  if(ct == time) {
+    return callback;
+  }
 }
- 
+
+function get_hhmm_time() {
+  const now = new Date();
+  const f = (x) => { let y = x + ''; return (y.length < 2)? '0'+y: y };
+  return f(now.getHours())+':'+f(now.getMinutes());
+}
 
 function setDailyRhythm(wakeUpTime, bedTime) {
-  setInterval(setAlarm(wakeUpTime, 'Пора просыпаться!', (message) => {alert(message)}), 60000); 
-  setInterval(setAlarm(bedTime, 'Пора в кровать!', (message) => {alert(message)}), 60000);
+  const f1 = setAlarm(wakeUpTime, () => alert('Пора просыпаться!'));
+  if(f1) {f1()};
+  const f2 = setAlarm(bedTime, () => alert('Пора в кровать!'));
+  if(f2) {f2()};
 }
 
-//тест
-
-setAlarm('23:33', 'Пора сдавать работу!', (message) => {alert(message)});
-setDailyRhythm();
+setInterval(setDailyRhythm('07:00','23:00'),60000); // 1 раз в минуту
